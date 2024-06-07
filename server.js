@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const entityRoutes = require("./routes/stockRoutes");
+const stockRoutes = require("./routes/stockRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const port = process.env.PORT || 3000;
 const mongoUri =
@@ -19,7 +20,8 @@ app.get("/testAPI", (req, res) => {
 });
 
 // Use entity routes
-app.use("/api/entities", entityRoutes);
+app.use("/api/stock", stockRoutes);
+app.use("/api/users", userRoutes);
 
 // Connect to MongoDB and start the server
 mongoose
