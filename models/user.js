@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Method to check if the user is an admin
+userSchema.methods.isAdmin = function () {
+  return this.role === "admin";
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
