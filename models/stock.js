@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
-const stockRecordSchema = new mongoose.Schema({
-  stockId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true,
-  },
+const stockSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -32,6 +27,6 @@ const stockRecordSchema = new mongoose.Schema({
   market: String,
 });
 
-const StockRecord = mongoose.model("StockRecord", stockRecordSchema);
+const Stock = mongoose.model("Stock", stockSchema);
 
-module.exports = StockRecord;
+module.exports = Stock;
