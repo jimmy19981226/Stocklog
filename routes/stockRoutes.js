@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Stock = require("../models/stock");
 const auth = require("../middleware/auth");
-const admin = require("../middleware/admin");
-const authorize = require("../middleware/authorize");
+const authorize = require("../middleware/authorize"); // Import the authorize middleware
 
-// Create a new stock (protected route)
+// Create a new stock (protected route, authenticated users)
 router.post("/", auth, async (req, res) => {
   const stock = new Stock({
     ...req.body,
@@ -20,7 +19,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// Get all stocks (protected route)
+// Get all stocks (protected route, authenticated users)
 router.get("/", auth, async (req, res) => {
   try {
     const stocks = await Stock.find({ userId: req.user.userId }); // Only get stocks for the authenticated user
@@ -30,7 +29,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Get a specific stock (protected route)
+// Get a specific stock (protected route, authenticated users)
 router.get("/:id", auth, async (req, res) => {
   try {
     const stock = await Stock.findOne({
@@ -44,11 +43,11 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// Update a stock (protected route)
-router.patch("/:id", auth, async (req, res) => {
+// Update a stock (protected route, only owner or admin)
+router.patch("/:id", auth, authorize, async (req, res) => {
   try {
     const stock = await Stock.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.userId }, // Ensure the stock belongs to the authenticated user
+      { _id: req.params.id },
       req.body,
       { new: true }
     );
@@ -59,13 +58,10 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-// Delete a stock (protected route)
-router.delete("/:id", auth, async (req, res) => {
+// Delete a stock (protected route, only owner or admin)
+router.delete("/:id", auth, authorize, async (req, res) => {
   try {
-    const stock = await Stock.findOneAndDelete({
-      _id: req.params.id,
-      userId: req.user.userId,
-    }); // Ensure the stock belongs to the authenticated user
+    const stock = await Stock.findOneAndDelete({ _id: req.params.id });
     if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
     res.status(200).json({ message: "Stock deleted" }); // 200 OK
   } catch (err) {

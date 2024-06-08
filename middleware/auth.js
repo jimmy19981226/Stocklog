@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
   if (!token) {
     return res
@@ -13,7 +14,11 @@ const auth = (req, res, next) => {
       token,
       process.env.JWT_SECRET || "your_jwt_secret"
     );
-    req.user = decoded; // Add the decoded token payload to the request object
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(401).json({ message: "Invalid token." });
+    }
+    req.user = user;
     next(); // Call the next middleware or route handler
   } catch (err) {
     res.status(400).json({ message: "Invalid token." });

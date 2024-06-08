@@ -56,38 +56,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Update user information (protected route)
-router.patch("/update", auth, async (req, res) => {
-  const { oldPassword, newPassword, ...updateData } = req.body;
+// Route to assign admin role (protected route)
+router.patch("/assign-admin/:id", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
-
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { role: "admin" },
+      { new: true }
+    );
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" }); // 404 Not Found
     }
-
-    // Verify old password
-    if (oldPassword && newPassword) {
-      const isMatch = await bcrypt.compare(oldPassword, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: "Invalid old password" });
-      }
-
-      // Hash new password
-      user.password = await bcrypt.hash(newPassword, 10);
-    }
-
-    // Update other fields, but not the role
-    for (let key in updateData) {
-      if (key !== "role") {
-        user[key] = updateData[key];
-      }
-    }
-
-    const updatedUser = await user.save();
-    res.status(200).json(updatedUser);
+    res.status(200).json(user); // 200 OK
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: err.message }); // 400 Bad Request
   }
 });
 
@@ -96,11 +78,11 @@ router.get("/profile", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" }); // 404 Not Found
     }
-    res.status(200).json(user);
+    res.status(200).json(user); // 200 OK
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message }); // 500 Internal Server Error
   }
 });
 
