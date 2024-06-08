@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid token." });
     }
-    req.user = user;
+    req.user = user; // Attach the user object to the request
     next(); // Call the next middleware or route handler
   } catch (err) {
     res.status(400).json({ message: "Invalid token." });

@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Stock = require("../models/stock");
 const auth = require("../middleware/auth");
-const authorize = require("../middleware/authorize"); // Import the authorize middleware
+const authorize = require("../middleware/authorize");
 
 // Create a new stock (protected route, authenticated users)
 router.post("/", auth, async (req, res) => {
   const stock = new Stock({
     ...req.body,
-    userId: req.user.userId, // Set the userId to the authenticated user's ID
+    userId: req.user._id, // Set the userId to the authenticated user's ID
   });
 
   try {
@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res) => {
 // Get all stocks (protected route, authenticated users)
 router.get("/", auth, async (req, res) => {
   try {
-    const stocks = await Stock.find({ userId: req.user.userId }); // Only get stocks for the authenticated user
+    const stocks = await Stock.find({ userId: req.user._id }); // Only get stocks for the authenticated user
     res.status(200).json(stocks); // 200 OK
   } catch (err) {
     res.status(500).json({ message: err.message }); // 500 Internal Server Error
@@ -34,7 +34,7 @@ router.get("/:id", auth, async (req, res) => {
   try {
     const stock = await Stock.findOne({
       _id: req.params.id,
-      userId: req.user.userId,
+      userId: req.user._id,
     }); // Ensure the stock belongs to the authenticated user
     if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
     res.status(200).json(stock); // 200 OK
@@ -47,7 +47,7 @@ router.get("/:id", auth, async (req, res) => {
 router.patch("/:id", auth, authorize, async (req, res) => {
   try {
     const stock = await Stock.findOneAndUpdate(
-      { _id: req.params.id },
+      { _id: req.params.id, userId: req.user._id }, // Ensure the stock belongs to the authenticated user
       req.body,
       { new: true }
     );
@@ -61,7 +61,10 @@ router.patch("/:id", auth, authorize, async (req, res) => {
 // Delete a stock (protected route, only owner or admin)
 router.delete("/:id", auth, authorize, async (req, res) => {
   try {
-    const stock = await Stock.findOneAndDelete({ _id: req.params.id });
+    const stock = await Stock.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user._id,
+    }); // Ensure the stock belongs to the authenticated user
     if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
     res.status(200).json({ message: "Stock deleted" }); // 200 OK
   } catch (err) {

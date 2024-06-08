@@ -9,18 +9,18 @@ const auth = require("../middleware/auth");
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, dateOfBirth } = req.body;
 
-  // Hash the password before saving it to the database
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const user = new User({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-    dateOfBirth,
-  });
-
   try {
+    // Hash the password before saving it to the database
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      dateOfBirth,
+    });
+
     const savedUser = await user.save();
     res.status(201).json(savedUser); // 201 Created
   } catch (err) {
@@ -73,10 +73,45 @@ router.patch("/assign-admin/:id", auth, async (req, res) => {
   }
 });
 
+// Update user information (protected route)
+router.patch("/update", auth, async (req, res) => {
+  const { oldPassword, newPassword, ...updateData } = req.body;
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Verify old password
+    if (oldPassword && newPassword) {
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid old password" });
+      }
+
+      // Hash new password
+      user.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    // Update other fields, but not the role
+    for (let key in updateData) {
+      if (key !== "role") {
+        user[key] = updateData[key];
+      }
+    }
+
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // Protected route example
 router.get("/profile", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).json({ message: "User not found" }); // 404 Not Found
     }
