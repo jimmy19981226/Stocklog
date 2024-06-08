@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -37,11 +38,15 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Method to check if the user is an admin
 userSchema.methods.isAdmin = function () {
   return this.role === "admin";
 };
 
-const User = mongoose.model("User", userSchema);
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);

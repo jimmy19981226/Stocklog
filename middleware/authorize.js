@@ -5,17 +5,18 @@ const authorize = async (req, res, next) => {
     const stock = await Stock.findById(req.params.id);
 
     if (!stock) {
-      return res.status(404).json({ message: "Entity not found" });
+      return res.status(404).json({ message: "Stock not found" });
     }
 
     // Check if the user is the owner of the stock or an admin
-    if (stock.userId.toString() !== req.user.userId && !req.user.isAdmin()) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "Access denied. You do not have permission to perform this action.",
-        });
+    if (
+      stock.userId.toString() !== req.user._id.toString() &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(403).json({
+        message:
+          "Access denied. You do not have permission to perform this action.",
+      });
     }
 
     next();
