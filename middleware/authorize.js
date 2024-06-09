@@ -3,14 +3,13 @@ const Stock = require("../models/stock");
 const authorize = async (req, res, next) => {
   try {
     const stock = await Stock.findById(req.params.id);
-
     if (!stock) {
       return res.status(404).json({ message: "Stock not found" });
     }
 
     // Check if the user is the owner of the stock or an admin
     if (
-      stock.userId.toString() !== req.user._id.toString() &&
+      stock.userId.toString() !== req.user.userId &&
       req.user.role !== "admin"
     ) {
       return res.status(403).json({
