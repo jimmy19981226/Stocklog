@@ -25,10 +25,7 @@ app.use("/api/users", userRoutes);
 
 // Connect to MongoDB and start the server
 mongoose
-  .connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
