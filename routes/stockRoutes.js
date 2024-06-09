@@ -8,7 +8,7 @@ const authorize = require("../middleware/authorize");
 router.post("/", auth, async (req, res) => {
   const stock = new Stock({
     ...req.body,
-    userId: req.user._id, // Set the userId to the authenticated user's ID
+    userId: req.user.userId, // Set the userId to the authenticated user's ID
   });
 
   try {
@@ -28,7 +28,7 @@ router.get("/", auth, async (req, res) => {
       stocks = await Stock.find();
     } else {
       // Regular users can get only their own stocks
-      stocks = await Stock.find({ userId: req.user._id });
+      stocks = await Stock.find({ userId: req.user.userId });
     }
     res.status(200).json(stocks); // 200 OK
   } catch (err) {
@@ -41,7 +41,7 @@ router.get("/:id", auth, authorize, async (req, res) => {
   try {
     const stock = await Stock.findOne({
       _id: req.params.id,
-      userId: req.user._id,
+      userId: req.user.userId,
     }); // Ensure the stock belongs to the authenticated user
     if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
     res.status(200).json(stock); // 200 OK
