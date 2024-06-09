@@ -10,8 +10,8 @@ router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, dateOfBirth } = req.body;
 
   try {
-    // Hash the password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Hashed password during signup:", hashedPassword); // Log the hashed password
 
     const user = new User({
       firstName,
@@ -22,9 +22,17 @@ router.post("/signup", async (req, res) => {
     });
 
     const savedUser = await user.save();
+    console.log("User signed up:", savedUser); // Log the created user
     res.status(201).json(savedUser); // 201 Created
   } catch (err) {
-    res.status(400).json({ message: err.message }); // 400 Bad Request
+    if (err.code === 11000) {
+      // Duplicate email error
+      console.error("Error signing up user: Duplicate email");
+      res.status(400).json({ message: "Email already exists" }); // 400 Bad Request
+    } else {
+      console.error("Error signing up user:", err); // Log any other errors
+      res.status(400).json({ message: err.message }); // 400 Bad Request
+    }
   }
 });
 
@@ -35,23 +43,32 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("User not found");
       return res.status(404).json({ message: "User not found" }); // 404 Not Found
     }
 
+    console.log("Stored hashed password:", user.password); // Log the stored hashed password
+    console.log("Entered password:", password); // Log the entered password
+
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log("Password comparison result:", isMatch); // Log the result of the comparison
+
     if (!isMatch) {
+      console.log("Password does not match");
       return res.status(400).json({ message: "Invalid credentials" }); // 400 Bad Request
     }
 
     // Create JWT
     const token = jwt.sign(
       { userId: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || "your_jwt_secret", // Use a secure key in production
-      { expiresIn: "1h" } // Token expires in 1 hour
+      process.env.JWT_SECRET || "your_jwt_secret",
+      { expiresIn: "1h" }
     );
 
+    console.log("User logged in:", user); // Log the logged-in user
     res.status(200).json({ token }); // 200 OK
   } catch (err) {
+    console.error("Error logging in user:", err); // Log any errors
     res.status(500).json({ message: err.message }); // 500 Internal Server Error
   }
 });
@@ -77,7 +94,7 @@ router.patch("/assign-admin/:id", auth, async (req, res) => {
 router.patch("/update", auth, async (req, res) => {
   const { oldPassword, newPassword, ...updateData } = req.body;
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -85,7 +102,10 @@ router.patch("/update", auth, async (req, res) => {
 
     // Verify old password
     if (oldPassword && newPassword) {
+      console.log("Verifying old password:", oldPassword); // Log old password verification
       const isMatch = await bcrypt.compare(oldPassword, user.password);
+      console.log("Old password comparison result:", isMatch); // Log old password comparison result
+
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid old password" });
       }
@@ -104,6 +124,7 @@ router.patch("/update", auth, async (req, res) => {
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
   } catch (err) {
+    console.error("Error updating user:", err); // Log any errors
     res.status(400).json({ message: err.message });
   }
 });
@@ -111,7 +132,7 @@ router.patch("/update", auth, async (req, res) => {
 // Protected route example
 router.get("/profile", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" }); // 404 Not Found
     }
