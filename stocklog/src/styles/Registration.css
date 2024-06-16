@@ -1,0 +1,156 @@
+.registration-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.left-panel {
+  background-color: #10466d;
+  color: white;
+  flex: 0 0 30%;
+  position: relative;
+}
+
+.left-panel .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  padding: 50px;
+  text-align: center;
+}
+
+.right-panel {
+  flex: 0 0 70%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.left-panel h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.left-panel h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.left-panel p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-family: Cursive;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.signin-button {
+  background-color: white;
+  color: #10466d;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 30px;
+  text-align: center;
+  margin-top: 90px;
+}
+
+.signin-button:hover {
+  background-color: #e6e6e6;
+}
+
+.registration-note {
+  font-size: 0.8em;
+  color: gray;
+}
+
+.create-account {
+  color: #10466d;
+}
+
+.right-panel h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-button {
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 0;
+}
+
+.social-button img {
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.input-container i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  background-color: #f3f3f3;
+  color: #333;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.signup-button {
+  background-color: #10466d;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-top: 70px;
+}
+
+.signup-button:hover {
+  background-color: #083a57;
+}
