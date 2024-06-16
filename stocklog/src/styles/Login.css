@@ -1,18 +1,33 @@
-.registration-container {
+.signin-container {
   display: flex;
   height: 100vh;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-.registration-left-panel {
-  background-color: #10466d;
-  color: white;
-  flex: 0 0 30%;
-  position: relative;
+.signin-left-panel {
+  flex: 0 0 65%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.registration-left-panel .content {
+.signin-right-panel {
+  background-color: #10466d;
+  color: white;
+  flex: 0 0 35%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.signin-right-panel .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,32 +37,17 @@
   text-align: center;
 }
 
-.registration-right-panel {
-  flex: 0 0 60%;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.registration-left-panel h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-}
-
-.registration-left-panel h2 {
+.signin-left-panel h2 {
   font-size: 2em;
   margin-bottom: 20px;
 }
 
-.registration-left-panel p {
-  font-size: 1.2em;
-  margin-bottom: 20px;
+.signin-note {
+  font-size: 0.8em;
+  color: gray;
 }
 
-.registration-logo {
+.signin-logo {
   font-family: Cursive;
   position: absolute;
   top: 20px;
@@ -56,43 +56,40 @@
   margin-bottom: 20px;
 }
 
-.registration-signin-button {
+.signin-right-panel h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.signin-right-panel p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  padding: 50px;
+}
+
+.signin-signup-button {
   background-color: white;
-  color: black;
+  color: #10466d;
   border: none;
   padding: 15px 30px;
   font-size: 1em;
   cursor: pointer;
   border-radius: 30px;
   text-align: center;
-  margin-top: 90px;
+  margin-top: 70px;
 }
 
-.registration-signin-button:hover {
+.signin-signup-button:hover {
   background-color: #e6e6e6;
 }
 
-.registration-note {
-  font-size: 0.8em;
-  color: gray;
-}
-
-.registration-create-account {
-  color: #10466d;
-}
-
-.registration-right-panel h2 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.registration-social-buttons {
+.signin-social-buttons {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.registration-social-button {
+.signin-social-button {
   background-color: transparent;
   border: none;
   width: 50px;
@@ -103,19 +100,19 @@
   padding: 0;
 }
 
-.registration-social-button img {
+.signin-social-button img {
   width: 50px;
   height: 50px;
   pointer-events: none;
 }
 
-.registration-input-container {
+.signin-input-container {
   position: relative;
   width: 100%;
   margin: 10px 0;
 }
 
-.registration-input-container i {
+.signin-input-container i {
   position: absolute;
   top: 50%;
   left: 10px;
@@ -123,7 +120,7 @@
   color: gray;
 }
 
-.registration-input-container input {
+.signin-input-container input {
   width: 100%;
   padding: 10px 10px 10px 40px;
   border: 1px solid #e6e6e6;
@@ -132,7 +129,7 @@
   color: #333;
 }
 
-.registration-form {
+.signin-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,7 +137,7 @@
   max-width: 400px;
 }
 
-.registration-signup-button {
+.signin-button {
   background-color: #10466d;
   color: white;
   border: none;
@@ -151,6 +148,6 @@
   margin-top: 70px;
 }
 
-.registration-signup-button:hover {
+.signin-button:hover {
   background-color: #083a57;
 }

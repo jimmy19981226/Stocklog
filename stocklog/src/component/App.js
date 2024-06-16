@@ -1,17 +1,20 @@
-import { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Registration from "./Registration";
-import Login from "./Login";
+import SignIn from "./SignIn";
 import StockPage from "./StockPage";
 import ProfilePage from "./ProfilePage";
 
 export default function App() {
   return (
-    <div>
-      <Registration />
-      {/* Uncomment the below lines one by one to test other components */}
-      {/* <Login /> */}
-      {/* <StockPage /> */}
-      {/* <ProfilePage /> */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/" element={<Registration />} />
+        {/* Uncomment the below lines one by one to test other components */}
+        {/* <Route path="/stock" element={<StockPage />} />
+        <Route path="/profile" element={<ProfilePage />} /> */}
+      </Routes>
+    </Router>
   );
 }
