@@ -5,6 +5,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 
+// Route to get all users (admin access or for development purposes)
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find(); // Fetch all users from the database
+    res.status(200).json(users); // Send the users in the response
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // Signup new user
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, dateOfBirth } = req.body;

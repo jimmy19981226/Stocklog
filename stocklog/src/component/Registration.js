@@ -65,6 +65,18 @@ export default function Registration() {
       </div>
       <div className="registration-right-panel">
         <h2 className="registration-create-account">Create Account</h2>
+        <div className="registration-social-buttons">
+          <button className="registration-social-button facebook">
+            <img src="/images/icon_facebook.png" alt="Facebook" />
+          </button>
+          <button className="registration-social-button google">
+            <img src="/images/icon_google.png" alt="Google" />
+          </button>
+          <button className="registration-social-button apple">
+            <img src="/images/icon_apple.png" alt="Apple" />
+          </button>
+        </div>
+        <p className="registration-note">Or use email for registration</p>
         <form className="registration-form" onSubmit={handleSignUp}>
           <div className="registration-input-container">
             <i className="fas fa-user"></i>
