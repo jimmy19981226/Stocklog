@@ -27,19 +27,19 @@ export default function ProfilePage() {
             <form className="profile-form">
               <div className="form-group">
                 <label>Email</label>
-                <input type="email" value="email@example.com" readOnly />
+                <input type="email" readOnly />
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <input type="password" value="password" readOnly />
+                <input type="password" readOnly />
               </div>
               <div className="form-group">
                 <label>Birthday</label>
-                <input type="date" value="2000-01-01" readOnly />
+                <input type="date" readOnly />
               </div>
               <div className="form-group">
                 <label>Join Date</label>
-                <input type="date" value="2022-01-01" readOnly />
+                <input type="date" readOnly />
               </div>
               <button type="button" className="edit-profile-button">
                 Edit Profile

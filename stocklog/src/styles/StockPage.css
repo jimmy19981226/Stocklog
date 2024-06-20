@@ -1,3 +1,17 @@
+.stock-page-container input[type="text"],
+.stock-page-container input[type="number"],
+.stock-page-container input[type="date"] {
+  background-color: #197da1;
+  border: none;
+  color: white;
+}
+
+.stock-page-container input::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+
+/* The rest of your styles */
 .stock-page-container {
   display: flex;
   flex-direction: column;
@@ -6,7 +20,7 @@
 }
 
 .stock-page-header {
-  background-color: #095892;
+  background-color: #003359;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -34,7 +48,7 @@
 }
 
 .stock-data {
-  background-color: #195c8d;
+  background-color: #003359;
   color: white;
   padding: 15px;
   border-radius: 10px;
@@ -89,7 +103,7 @@
 }
 
 .stock-table {
-  background-color: #195c8d;
+  background-color: #003359;
   color: white;
   padding: 15px;
   border-radius: 10px;
@@ -98,7 +112,7 @@
 }
 
 .portfolio {
-  background-color: #195c8d;
+  background-color: #003359;
   color: white;
   padding: 15px;
   border-radius: 10px;
@@ -133,19 +147,6 @@
 .portfolio p {
   margin: 10px 0;
   color: #aff4c6;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"] {
-  background-color: #197da1;
-  border: none;
-  color: white;
-}
-
-input::placeholder {
-  color: white;
-  opacity: 0.7;
 }
 
 .search-bar {

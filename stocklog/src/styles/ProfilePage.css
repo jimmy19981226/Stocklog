@@ -6,7 +6,7 @@
 }
 
 .profile-page-header {
-  background-color: #095892;
+  background-color: #003359;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -35,7 +35,7 @@
 }
 
 .profile-card {
-  background-color: #195c8d;
+  background-color: #003359;
   color: white;
   padding: 20px;
   border-radius: 10px;
@@ -91,4 +91,6 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  width: 200px;
+  margin: 0 auto;
 }

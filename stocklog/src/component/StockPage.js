@@ -36,19 +36,19 @@ export default function StockPage() {
           <form className="stock-form">
             <div className="form-group">
               <label>Stock</label>
-              <input type="text" name="stock" placeholder="AAPL" />
+              <input type="text" name="stock" placeholder="Stock Name" />
             </div>
             <div className="form-group">
               <label>Buying Price</label>
-              <input type="number" name="buyingPrice" placeholder="145.50" />
+              <input type="number" name="buyingPrice" placeholder="0.00" />
             </div>
             <div className="form-group">
               <label>Selling Price</label>
-              <input type="number" name="sellingPrice" placeholder="150.00" />
+              <input type="number" name="sellingPrice" placeholder="0.00" />
             </div>
             <div className="form-group">
               <label>Transaction Fee</label>
-              <input type="number" name="transactionFee" placeholder="2.99" />
+              <input type="number" name="transactionFee" placeholder="0.00" />
             </div>
             <div className="form-group">
               <label>Purchase Date</label>
@@ -60,11 +60,11 @@ export default function StockPage() {
             </div>
             <div className="form-group">
               <label>Quantity</label>
-              <input type="number" name="quantity" placeholder="10" />
+              <input type="number" name="quantity" placeholder="0.00" />
             </div>
             <div className="form-group">
               <label>Market</label>
-              <input type="text" name="market" placeholder="NASDAQ" />
+              <input type="text" name="market" placeholder="Market Name" />
             </div>
             <button
               type="submit"
@@ -84,7 +84,7 @@ export default function StockPage() {
                 <input
                   type="text"
                   name="stock"
-                  placeholder="Stock"
+                  placeholder="Stock Name"
                   value={searchParams.stock}
                   onChange={handleSearchChange}
                 />
@@ -108,16 +108,6 @@ export default function StockPage() {
                 />
               </div>
               <div className="search-field">
-                <label>Market</label>
-                <input
-                  type="text"
-                  name="market"
-                  placeholder="Market"
-                  value={searchParams.market}
-                  onChange={handleSearchChange}
-                />
-              </div>
-              <div className="search-field">
                 <label>Buying Price</label>
                 <input
                   type="number"
@@ -134,6 +124,16 @@ export default function StockPage() {
                   name="sellingPrice"
                   placeholder="Selling Price"
                   value={searchParams.sellingPrice}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Market</label>
+                <input
+                  type="text"
+                  name="market"
+                  placeholder="Market Name"
+                  value={searchParams.market}
                   onChange={handleSearchChange}
                 />
               </div>
