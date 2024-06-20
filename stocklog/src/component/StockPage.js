@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/StockPage.css";
 
 export default function StockPage() {
+  const [searchParams, setSearchParams] = useState({
+    stock: "",
+    purchaseDate: "",
+    sellDate: "",
+    market: "",
+    buyingPrice: "",
+    sellingPrice: "",
+  });
+
+  const handleSearchChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams((prevParams) => ({ ...prevParams, [name]: value }));
+  };
+
   return (
     <div className="stock-page-container">
       <header className="stock-page-header">
@@ -59,6 +73,67 @@ export default function StockPage() {
         <div className="bottom-section">
           <section className="stock-table">
             <h2>Your Stock</h2>
+            <div className="search-bar">
+              <div className="search-field">
+                <label>Stock</label>
+                <input
+                  type="text"
+                  name="stock"
+                  placeholder="Stock"
+                  value={searchParams.stock}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Purchase Date</label>
+                <input
+                  type="date"
+                  name="purchaseDate"
+                  value={searchParams.purchaseDate}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Sell Date</label>
+                <input
+                  type="date"
+                  name="sellDate"
+                  value={searchParams.sellDate}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Market</label>
+                <input
+                  type="text"
+                  name="market"
+                  placeholder="Market"
+                  value={searchParams.market}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Buying Price</label>
+                <input
+                  type="number"
+                  name="buyingPrice"
+                  placeholder="Buying Price"
+                  value={searchParams.buyingPrice}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <div className="search-field">
+                <label>Selling Price</label>
+                <input
+                  type="number"
+                  name="sellingPrice"
+                  placeholder="Selling Price"
+                  value={searchParams.sellingPrice}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              <button type="button">Search</button>
+            </div>
             <table>
               <thead>
                 <tr>
@@ -74,6 +149,7 @@ export default function StockPage() {
                 </tr>
               </thead>
               <tbody>
+                {/* Example data */}
                 <tr>
                   <td>AAPL</td>
                   <td>145.50</td>

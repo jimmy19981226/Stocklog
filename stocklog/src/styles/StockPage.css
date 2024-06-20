@@ -147,3 +147,40 @@ input::placeholder {
   color: white;
   opacity: 0.7;
 }
+
+.search-bar {
+  display: flex;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-bar .search-field {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.search-bar .search-field label {
+  margin-bottom: 5px;
+  color: #aff4c6;
+}
+
+.search-bar .search-field input {
+  flex: 1 1 20%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #097aab;
+  color: white;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #14ae5c;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
