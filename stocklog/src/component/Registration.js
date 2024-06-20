@@ -12,6 +12,7 @@ export default function Registration() {
     dateOfBirth: "",
   });
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null); // Add state for success message
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,7 +32,11 @@ export default function Registration() {
         formData
       );
       console.log("API response:", response); // Log the full response
-      navigate("/signin"); // Navigate to sign-in page after successful registration
+      setSuccess("Account created successfully!"); // Set success message
+      setError(null); // Clear any previous error messages
+      setTimeout(() => {
+        navigate("/signin"); // Navigate to sign-in page after a short delay
+      }, 2000); // Adjust the delay as needed
     } catch (error) {
       console.error("Error signing up:", error);
       if (error.response) {
@@ -44,6 +49,7 @@ export default function Registration() {
         console.error("Error message:", error.message);
         setError("Error: " + error.message);
       }
+      setSuccess(null); // Clear any previous success messages
     }
   };
 
@@ -137,6 +143,7 @@ export default function Registration() {
             SIGN UP
           </button>
           {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">{success}</p>}
         </form>
       </div>
     </div>

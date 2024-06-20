@@ -154,3 +154,16 @@
 .registration-signup-button:hover {
   background-color: #083a57;
 }
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Add this for error-message if not already present */
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
