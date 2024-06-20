@@ -185,3 +185,15 @@
   cursor: pointer;
   margin-top: 20px;
 }
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
