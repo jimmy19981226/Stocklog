@@ -1,8 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    // Add your sign-in logic here
+    navigate("/stock");
+  };
+
   return (
     <div className="signin-container">
       <div className="signin-left-panel">
@@ -19,7 +27,7 @@ export default function SignIn() {
           </button>
         </div>
         <p className="signin-note">Or use your email account</p>
-        <form className="signin-form">
+        <form className="signin-form" onSubmit={handleSignIn}>
           <div className="signin-input-container">
             <i className="fas fa-envelope"></i>
             <input type="email" placeholder="Email" />

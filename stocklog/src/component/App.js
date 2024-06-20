@@ -11,9 +11,9 @@ export default function App() {
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Registration />} />
+        <Route path="/stock" element={<StockPage />} />
         {/* Uncomment the below lines one by one to test other components */}
-        {/* <Route path="/stock" element={<StockPage />} />
-        <Route path="/profile" element={<ProfilePage />} /> */}
+        {/* <Route path="/profile" element={<ProfilePage />} /> */}
       </Routes>
     </Router>
   );
