@@ -5,7 +5,7 @@ import "../styles/StockPage.css";
 
 export default function StockPage() {
   const [searchParams, setSearchParams] = useState({
-    stock: "",
+    stockName: "",
     purchaseDate: "",
     sellDate: "",
     market: "",
@@ -14,7 +14,7 @@ export default function StockPage() {
   });
   const [stocks, setStocks] = useState([]);
   const [formData, setFormData] = useState({
-    stock: "",
+    stockName: "",
     buyingPrice: "",
     sellingPrice: "",
     transactionFee: "",
@@ -109,9 +109,9 @@ export default function StockPage() {
               <label>Stock</label>
               <input
                 type="text"
-                name="stock"
+                name="stockName"
                 placeholder="Stock Name"
-                value={formData.stock}
+                value={formData.stockName}
                 onChange={handleInputChange}
               />
             </div>
@@ -202,9 +202,9 @@ export default function StockPage() {
                 <label>Stock</label>
                 <input
                   type="text"
-                  name="stock"
+                  name="stockName"
                   placeholder="Stock Name"
-                  value={searchParams.stock}
+                  value={searchParams.stockName}
                   onChange={handleSearchChange}
                 />
               </div>
@@ -275,7 +275,7 @@ export default function StockPage() {
               <tbody>
                 {stocks.map((stock) => (
                   <tr key={stock._id}>
-                    <td>{stock.stock}</td>
+                    <td>{stock.stockName}</td>
                     <td>{stock.buyingPrice}</td>
                     <td>{stock.sellingPrice}</td>
                     <td>{stock.transactionFee}</td>
