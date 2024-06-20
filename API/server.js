@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors"); // Add this line
 const stockRoutes = require("./routes/stockRoutes");
 const userRoutes = require("./routes/userRoutes");
 
@@ -13,6 +14,9 @@ const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
+
+// Use CORS middleware
+app.use(cors()); // Add this line
 
 // Define the testAPI endpoint
 app.get("/testAPI", (req, res) => {
