@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/StockPage.css";
 
 export default function StockPage() {
@@ -21,8 +22,12 @@ export default function StockPage() {
       <header className="stock-page-header">
         <h1 className="stock-logo">StockLog</h1>
         <div className="header-icons">
-          <i className="fas fa-home" style={{ color: "#8AA5ED" }}></i>
-          <i className="fas fa-user" style={{ color: "#8AA5ED" }}></i>
+          <Link to="/stock">
+            <i className="fas fa-home" style={{ color: "#8AA5ED" }}></i>
+          </Link>
+          <Link to="/profile">
+            <i className="fas fa-user" style={{ color: "#8AA5ED" }}></i>
+          </Link>
         </div>
       </header>
       <main className="stock-page-main">
