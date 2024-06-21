@@ -177,14 +177,22 @@
   color: white;
 }
 
-.search-bar button {
+.search-bar .button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.search-bar .button-group button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #14ae5c;
-  color: white;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.search-bar .button-group .reset-button {
+  background-color: #ce082c;
+  color: white;
 }
 
 .success-message {
@@ -197,4 +205,12 @@
   color: red;
   margin-top: 10px;
   text-align: center;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button:focus {
+  outline: none;
 }

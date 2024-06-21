@@ -26,9 +26,20 @@ export default function StockPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  const [portfolio, setPortfolio] = useState({
+    totalInvested: 0,
+    currentValue: 0,
+    totalEarnings: 0,
+    netProfitLoss: 0,
+  });
+
   useEffect(() => {
     fetchStocks();
   }, []);
+
+  useEffect(() => {
+    calculatePortfolio();
+  }, [stocks]);
 
   const fetchStocks = async () => {
     try {
@@ -104,6 +115,44 @@ export default function StockPage() {
       console.error("Error searching stocks:", error);
       setError(error.response?.data?.message || "Error searching stocks");
     }
+  };
+
+  const handleReset = () => {
+    setSearchParams({
+      stockName: "",
+      purchaseDate: "",
+      sellDate: "",
+      market: "",
+      buyingPrice: "",
+      sellingPrice: "",
+    });
+    fetchStocks();
+  };
+
+  const calculatePortfolio = () => {
+    let totalInvested = 0;
+    let currentValue = 0;
+    let totalEarnings = 0;
+    let totalTransactionFees = 0;
+
+    stocks.forEach((stock) => {
+      const { buyingPrice, sellingPrice, quantity, transactionFee } = stock;
+      totalInvested += buyingPrice * quantity;
+      currentValue += sellingPrice ? sellingPrice * quantity : 0;
+      totalEarnings += sellingPrice
+        ? (sellingPrice - buyingPrice) * quantity
+        : 0;
+      totalTransactionFees += transactionFee || 0;
+    });
+
+    const netProfitLoss = totalEarnings - totalTransactionFees;
+
+    setPortfolio({
+      totalInvested,
+      currentValue,
+      totalEarnings,
+      netProfitLoss,
+    });
   };
 
   return (
@@ -274,9 +323,18 @@ export default function StockPage() {
                   onChange={handleSearchChange}
                 />
               </div>
-              <button type="button" onClick={handleSearch}>
-                Search
-              </button>
+              <div className="button-group">
+                <button type="button" onClick={handleSearch}>
+                  Search
+                </button>
+                <button
+                  type="button"
+                  className="reset-button"
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
+              </div>
             </div>
             <table>
               <thead>
@@ -317,10 +375,10 @@ export default function StockPage() {
           </section>
           <section className="portfolio">
             <h2>Portfolio</h2>
-            <p>Total Capital Invested:</p>
-            <p>Current Portfolio Value:</p>
-            <p>Total Earnings:</p>
-            <p>Net Profit/Loss:</p>
+            <p>Total Capital Invested: ${portfolio.totalInvested.toFixed(2)}</p>
+            <p>Current Portfolio Value: ${portfolio.currentValue.toFixed(2)}</p>
+            <p>Total Earnings: ${portfolio.totalEarnings.toFixed(2)}</p>
+            <p>Net Profit/Loss: ${portfolio.netProfitLoss.toFixed(2)}</p>
           </section>
         </div>
       </main>
