@@ -43,13 +43,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-picture img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin-bottom: 20px;
-}
-
 .profile-info h2 {
   margin-bottom: 10px;
   color: #aff4c6;
@@ -93,4 +86,10 @@
   cursor: pointer;
   width: 200px;
   margin: 0 auto;
+}
+
+.message {
+  text-align: center;
+  margin-top: 10px;
+  color: #d3e4f1;
 }
