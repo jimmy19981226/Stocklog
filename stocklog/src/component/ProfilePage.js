@@ -64,24 +64,56 @@ export default function ProfilePage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleEditProfile = async (e) => {
-    e.preventDefault();
+  const handleSaveChanges = async () => {
+    console.log("Submitting form data:", formData);
+
+    const { password, ...updateData } = formData;
+    if (password) {
+      updateData.password = password;
+    }
+
     try {
       const response = await axios.patch(
         "http://localhost:3000/api/users/update",
-        formData,
+        updateData,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      setUser(response.data);
+      console.log("Update response:", response.data);
+      setUser({
+        ...response.data,
+        dateOfBirth: response.data.dateOfBirth
+          ? response.data.dateOfBirth.split("T")[0]
+          : "",
+        joinDate: response.data.joinDate
+          ? response.data.joinDate.split("T")[0]
+          : "",
+      });
       setEditMode(false);
       setMessage("Profile updated successfully");
     } catch (error) {
       console.error("Error updating profile:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
+      }
       setMessage("Error updating profile");
+    }
+  };
+
+  const handleEditProfile = () => {
+    setEditMode(!editMode);
+    setMessage(null); // Clear any previous messages when entering edit mode
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (editMode) {
+      handleSaveChanges();
+    } else {
+      setEditMode(true);
     }
   };
 
@@ -110,7 +142,7 @@ export default function ProfilePage() {
               {user.firstName} {user.lastName}
             </h2>
             <p>Last Login: {formatDate(user.lastLogin)}</p>
-            <form className="profile-form" onSubmit={handleEditProfile}>
+            <form className="profile-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Email</label>
                 <input type="email" name="email" value={user.email} readOnly />
@@ -165,19 +197,9 @@ export default function ProfilePage() {
                   readOnly
                 />
               </div>
-              {editMode ? (
-                <button type="submit" className="edit-profile-button">
-                  Save Changes
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="edit-profile-button"
-                  onClick={() => setEditMode(true)}
-                >
-                  Edit Profile
-                </button>
-              )}
+              <button type="submit" className="edit-profile-button">
+                {editMode ? "Save Changes" : "Edit Profile"}
+              </button>
             </form>
             {message && <p className="message">{message}</p>}
           </div>

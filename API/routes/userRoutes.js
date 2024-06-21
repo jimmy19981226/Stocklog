@@ -104,6 +104,7 @@ router.patch("/assign-admin/:id", auth, async (req, res) => {
 // Update user information (protected route)
 router.patch("/update", auth, async (req, res) => {
   const { oldPassword, newPassword, ...updateData } = req.body;
+  console.log("Update request data:", req.body); // Log request data
   try {
     const user = await User.findById(req.user.userId);
 
@@ -111,7 +112,7 @@ router.patch("/update", auth, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Verify old password
+    // Verify old password if both oldPassword and newPassword are provided
     if (oldPassword && newPassword) {
       console.log("Verifying old password:", oldPassword); // Log old password verification
       const isMatch = await bcrypt.compare(oldPassword, user.password);
