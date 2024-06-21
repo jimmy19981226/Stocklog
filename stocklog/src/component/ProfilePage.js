@@ -43,7 +43,7 @@ export default function ProfilePage() {
         dateOfBirth: userData.dateOfBirth
           ? userData.dateOfBirth.split("T")[0]
           : "",
-        joinDate: userData.joinDate ? userData.joinDate.split("T")[0] : "",
+        joinDate: userData.dateJoined ? userData.dateJoined.split("T")[0] : "",
         lastLogin: userData.lastLogin,
       });
       setFormData({
@@ -88,8 +88,8 @@ export default function ProfilePage() {
         dateOfBirth: response.data.dateOfBirth
           ? response.data.dateOfBirth.split("T")[0]
           : "",
-        joinDate: response.data.joinDate
-          ? response.data.joinDate.split("T")[0]
+        joinDate: response.data.dateJoined
+          ? response.data.dateJoined.split("T")[0]
           : "",
       });
       setEditMode(false);
