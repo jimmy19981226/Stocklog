@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100vh;
   font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
 .profile-page-header {
