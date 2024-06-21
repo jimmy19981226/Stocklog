@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ProfilePage.css";
 
@@ -20,6 +20,7 @@ export default function ProfilePage() {
     dateOfBirth: "",
   });
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserProfile();
@@ -105,7 +106,7 @@ export default function ProfilePage() {
 
   const handleEditProfile = () => {
     setEditMode(!editMode);
-    setMessage(null); // Clear any previous messages when entering edit mode
+    setMessage(null);
   };
 
   const handleSubmit = (e) => {
@@ -115,6 +116,14 @@ export default function ProfilePage() {
     } else {
       setEditMode(true);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setMessage("You have been logged out.");
+    setTimeout(() => {
+      navigate("/");
+    }, 2000); // Wait for 2 seconds before redirecting to login page
   };
 
   const formatDate = (dateString) => {
@@ -130,9 +139,11 @@ export default function ProfilePage() {
           <Link to="/stock">
             <i className="fas fa-home" style={{ color: "#8AA5ED" }}></i>
           </Link>
-          <Link to="/profile">
-            <i className="fas fa-user" style={{ color: "#8AA5ED" }}></i>
-          </Link>
+          <i
+            className="fas fa-sign-out-alt"
+            style={{ color: "#FF4C6C", cursor: "pointer", marginLeft: "20px" }}
+            onClick={handleLogout}
+          ></i>
         </div>
       </header>
       <main className="profile-page-main">

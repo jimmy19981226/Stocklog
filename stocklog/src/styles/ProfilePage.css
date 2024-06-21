@@ -93,3 +93,12 @@
   margin-top: 10px;
   color: #d3e4f1;
 }
+
+.header-icons i {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.header-icons i:hover {
+  opacity: 0.8;
+}
