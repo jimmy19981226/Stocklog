@@ -23,6 +23,8 @@ export default function StockPage() {
     quantity: "",
     market: "",
   });
+  const [editMode, setEditMode] = useState(false);
+  const [currentStockId, setCurrentStockId] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -67,18 +69,38 @@ export default function StockPage() {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/stock",
-        formData,
-        {
+      if (editMode) {
+        await axios.patch(
+          `http://localhost:3000/api/stock/${currentStockId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setSuccess("Stock updated successfully!");
+      } else {
+        await axios.post("http://localhost:3000/api/stock", formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }
-      );
-      setSuccess("Stock saved successfully!");
+        });
+        setSuccess("Stock saved successfully!");
+      }
       setError(null);
       fetchStocks();
+      setEditMode(false);
+      setFormData({
+        stockName: "",
+        buyingPrice: "",
+        sellingPrice: "",
+        transactionFee: "",
+        purchaseDate: "",
+        sellDate: "",
+        quantity: "",
+        market: "",
+      });
     } catch (error) {
       console.error("Error saving stock:", error);
       setError(error.response?.data?.message || "Error saving stock");
@@ -97,6 +119,21 @@ export default function StockPage() {
     } catch (error) {
       console.error("Error deleting stock:", error);
     }
+  };
+
+  const handleEdit = (stock) => {
+    setFormData({
+      stockName: stock.stockName,
+      buyingPrice: stock.buyingPrice,
+      sellingPrice: stock.sellingPrice,
+      transactionFee: stock.transactionFee,
+      purchaseDate: stock.purchaseDate,
+      sellDate: stock.sellDate,
+      quantity: stock.quantity,
+      market: stock.market,
+    });
+    setCurrentStockId(stock._id);
+    setEditMode(true);
   };
 
   const handleSearch = async () => {
@@ -255,7 +292,7 @@ export default function StockPage() {
               className="save-button"
               style={{ backgroundColor: "#14AE5C" }}
             >
-              Save
+              {editMode ? "Update" : "Save"}
             </button>
           </form>
           {error && <p className="error-message">{error}</p>}
@@ -362,6 +399,11 @@ export default function StockPage() {
                     <td>{stock.quantity}</td>
                     <td>{stock.market}</td>
                     <td>
+                      <i
+                        className="fas fa-edit"
+                        style={{ color: "#8AA5ED", marginRight: "10px" }}
+                        onClick={() => handleEdit(stock)}
+                      ></i>
                       <i
                         className="fas fa-trash"
                         style={{ color: "#FF4C6C" }}
