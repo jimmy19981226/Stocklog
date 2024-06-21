@@ -88,6 +88,24 @@ export default function StockPage() {
     }
   };
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/stock/search",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          params: searchParams,
+        }
+      );
+      setStocks(response.data);
+    } catch (error) {
+      console.error("Error searching stocks:", error);
+      setError(error.response?.data?.message || "Error searching stocks");
+    }
+  };
+
   return (
     <div className="stock-page-container">
       <header className="stock-page-header">
@@ -256,7 +274,9 @@ export default function StockPage() {
                   onChange={handleSearchChange}
                 />
               </div>
-              <button type="button">Search</button>
+              <button type="button" onClick={handleSearch}>
+                Search
+              </button>
             </div>
             <table>
               <thead>

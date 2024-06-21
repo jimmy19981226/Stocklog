@@ -1,21 +1,67 @@
 const express = require("express");
 const router = express.Router();
-const Stock = require("../models/stock");
+const Stock = require("../models/stock"); // Ensure this matches the file name exactly
 const auth = require("../middleware/auth");
 const authorize = require("../middleware/authorize");
+
+// Search stocks
+router.get("/search", auth, async (req, res) => {
+  try {
+    const searchCriteria = {};
+
+    if (req.query.stockName) {
+      searchCriteria.stockName = { $regex: req.query.stockName, $options: "i" };
+    }
+    if (req.query.purchaseDate) {
+      const purchaseDate = new Date(req.query.purchaseDate);
+      if (!isNaN(purchaseDate)) {
+        searchCriteria.purchaseDate = purchaseDate;
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Invalid purchase date format" });
+      }
+    }
+    if (req.query.sellDate) {
+      const sellDate = new Date(req.query.sellDate);
+      if (!isNaN(sellDate)) {
+        searchCriteria.sellDate = sellDate;
+      } else {
+        return res.status(400).json({ message: "Invalid sell date format" });
+      }
+    }
+    if (req.query.market) {
+      searchCriteria.market = { $regex: req.query.market, $options: "i" };
+    }
+    if (req.query.buyingPrice) {
+      searchCriteria.buyingPrice = parseFloat(req.query.buyingPrice);
+    }
+    if (req.query.sellingPrice) {
+      searchCriteria.sellingPrice = parseFloat(req.query.sellingPrice);
+    }
+
+    const stocks = await Stock.find(searchCriteria);
+    res.status(200).json(stocks);
+  } catch (error) {
+    console.error("Search error:", error);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
+  }
+});
 
 // Create a new stock (protected route, authenticated users)
 router.post("/", auth, async (req, res) => {
   const stock = new Stock({
     ...req.body,
-    userId: req.user.userId, // Set the userId to the authenticated user's ID
+    userId: req.user.userId,
   });
 
   try {
     const savedStock = await stock.save();
-    res.status(201).json(savedStock); // 201 Created
+    res.status(201).json(savedStock);
   } catch (err) {
-    res.status(400).json({ message: err.message }); // 400 Bad Request
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -24,15 +70,13 @@ router.get("/", auth, async (req, res) => {
   try {
     let stocks;
     if (req.user.role === "admin") {
-      // Admins can get all stocks
       stocks = await Stock.find();
     } else {
-      // Regular users can get only their own stocks
       stocks = await Stock.find({ userId: req.user.userId });
     }
-    res.status(200).json(stocks); // 200 OK
+    res.status(200).json(stocks);
   } catch (err) {
-    res.status(500).json({ message: err.message }); // 500 Internal Server Error
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -42,11 +86,11 @@ router.get("/:id", auth, authorize, async (req, res) => {
     const stock = await Stock.findOne({
       _id: req.params.id,
       userId: req.user.userId,
-    }); // Ensure the stock belongs to the authenticated user
-    if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
-    res.status(200).json(stock); // 200 OK
+    });
+    if (!stock) return res.status(404).json({ message: "Stock not found" });
+    res.status(200).json(stock);
   } catch (err) {
-    res.status(500).json({ message: err.message }); // 500 Internal Server Error
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -58,10 +102,10 @@ router.patch("/:id", auth, authorize, async (req, res) => {
       req.body,
       { new: true }
     );
-    if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
-    res.status(200).json(stock); // 200 OK
+    if (!stock) return res.status(404).json({ message: "Stock not found" });
+    res.status(200).json(stock);
   } catch (err) {
-    res.status(400).json({ message: err.message }); // 400 Bad Request
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -69,10 +113,10 @@ router.patch("/:id", auth, authorize, async (req, res) => {
 router.delete("/:id", auth, authorize, async (req, res) => {
   try {
     const stock = await Stock.findOneAndDelete({ _id: req.params.id });
-    if (!stock) return res.status(404).json({ message: "Stock not found" }); // 404 Not Found
-    res.status(200).json({ message: "Stock deleted" }); // 200 OK
+    if (!stock) return res.status(404).json({ message: "Stock not found" });
+    res.status(200).json({ message: "Stock deleted" });
   } catch (err) {
-    res.status(500).json({ message: err.message }); // 500 Internal Server Error
+    res.status(500).json({ message: err.message });
   }
 });
 
