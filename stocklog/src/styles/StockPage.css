@@ -116,7 +116,7 @@
   color: white;
   padding: 15px;
   border-radius: 10px;
-  width: 25%; /* Adjusted width */
+  width: 25%;
   overflow: auto;
 }
 
@@ -128,14 +128,14 @@
 .stock-table table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto; /* Ensure equal width for all columns */
+  table-layout: auto;
 }
 
 .stock-table th,
 .stock-table td {
   padding: 10px;
   border-bottom: 1px solid #aff4c6;
-  text-align: left; /* Ensure left alignment for consistency */
+  text-align: left;
 }
 
 .stock-table th {
