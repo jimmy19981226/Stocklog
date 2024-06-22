@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors"); // Add this line
 const stockRoutes = require("./routes/stockRoutes");
 const userRoutes = require("./routes/userRoutes");
+const portfolioRoutes = require("./routes/portfolioRoutes");
 
 const port = process.env.PORT || 3000;
 const mongoUri =
@@ -26,6 +27,7 @@ app.get("/testAPI", (req, res) => {
 // Use entity routes
 app.use("/api/stock", stockRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/portfolio", portfolioRoutes);
 
 // Connect to MongoDB and start the server
 mongoose
