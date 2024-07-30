@@ -72,8 +72,9 @@
   background-color: #e6e6e6;
 }
 
+/* Or use email for registration Text */
 .registration-note {
-  font-size: 0.8em;
+  font-size: 1em;
   color: gray;
 }
 
@@ -81,8 +82,9 @@
   color: #10466d;
 }
 
+/* Create Account Text */
 .registration-right-panel h2 {
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom: 20px;
 }
 
@@ -92,20 +94,22 @@
   margin-bottom: 20px;
 }
 
+/* Each Social Button Include Its Image Icon */
 .registration-social-button {
   background-color: transparent;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   margin: 0 10px;
   font-size: 1em;
   cursor: pointer;
   padding: 0;
 }
 
+/* Button Image Icon */
 .registration-social-button img {
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
@@ -115,6 +119,7 @@
   margin: 10px 0;
 }
 
+/* Input Field Icon */
 .registration-input-container i {
   position: absolute;
   top: 50%;
@@ -123,8 +128,10 @@
   color: gray;
 }
 
+/* Input Field */
 .registration-input-container input {
   width: 100%;
+  height: 30px;
   padding: 10px 10px 10px 40px;
   border: 1px solid #e6e6e6;
   border-radius: 5px;

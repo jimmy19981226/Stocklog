@@ -37,13 +37,15 @@
   text-align: center;
 }
 
+/* Sign In Account Text */
 .signin-left-panel h2 {
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom: 20px;
 }
 
+/* Or use your email account Text */
 .signin-note {
-  font-size: 0.8em;
+  font-size: 1em;
   color: gray;
 }
 
@@ -89,20 +91,22 @@
   margin-bottom: 20px;
 }
 
+/* Each Social Button Include Its Image Icon */
 .signin-social-button {
   background-color: transparent;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   margin: 0 10px;
   font-size: 1em;
   cursor: pointer;
   padding: 0;
 }
 
+/* Button Image Icon */
 .signin-social-button img {
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
@@ -112,6 +116,7 @@
   margin: 10px 0;
 }
 
+/* Input Field Icon */
 .signin-input-container i {
   position: absolute;
   top: 50%;
@@ -120,8 +125,10 @@
   color: gray;
 }
 
+/* Input Field */
 .signin-input-container input {
   width: 100%;
+  height: 30px;
   padding: 10px 10px 10px 40px;
   border: 1px solid #e6e6e6;
   border-radius: 5px;
