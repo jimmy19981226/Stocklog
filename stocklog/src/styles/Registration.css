@@ -5,13 +5,16 @@
   overflow: hidden;
 }
 
+/* Styles for the registration left panel */
 .registration-left-panel {
   background-color: #10466d;
   color: white;
   flex: 0 0 30%;
-  position: relative;
+  display: flex;
+  align-items: center;
 }
 
+/* Styles for the content inside the registration left panel */
 .registration-left-panel .content {
   display: flex;
   flex-direction: column;

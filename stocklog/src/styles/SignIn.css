@@ -15,25 +15,22 @@
   text-align: center;
 }
 
+/* Styles for the registration right panel */
 .signin-right-panel {
   background-color: #10466d;
   color: white;
   flex: 0 0 35%;
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
+/* Styles for the content inside the registration right panel */
 .signin-right-panel .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 70%;
-  padding: 50px;
   text-align: center;
 }
 
